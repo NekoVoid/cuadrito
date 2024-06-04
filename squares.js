@@ -462,10 +462,7 @@ class MyPlayer extends Agent{
         }
 
         let validMoves = this.trimmed_valid_moves(board);
-        
-        // console.log("gen rand ValidMoves:", endTime - startTime);
         let indexGen = new RandIndex(validMoves.length);
-        
         let finalMove = validMoves[0] ?? [-1,-1,-1];
         
         // let tree = []
@@ -478,12 +475,12 @@ class MyPlayer extends Agent{
                 let move = validMoves[indexGen.next()];
                 
                 let newBoard = this.board.clone(board);
-                // this.minimaxTimer.startTimer();
+                
                 this.board.move(newBoard, move[0], move[1], move[2], this.numColor) // el color en el maximizador es el jugador evaluando
-                // this.minimaxTimer.endTimer();
+                
 
                 let [result, minMove] = this.minimax(newBoard, depth - 1, false, alpha, beta);
-                // tree.push([move, minTree]);
+                
 
                 if(result > maxResult){
                     maxResult = result;
@@ -494,7 +491,7 @@ class MyPlayer extends Agent{
 
                 if(beta <= alpha) break;
             }
-            // tree[0] = maxResult;
+            
             return [maxResult, finalMove]
         }else{
             
@@ -508,7 +505,7 @@ class MyPlayer extends Agent{
                 this.board.move(newBoard, move[0], move[1], move[2], this.numOColor) // se voltean los colores para minimizador
 
                 let [result, maxMove] = this.minimax(newBoard, depth - 1, true, alpha, beta);
-                // tree.push([move, maxTree]);
+                
 
                 if(result < minResult){
                     minResult = result;
@@ -519,7 +516,7 @@ class MyPlayer extends Agent{
 
                 if(beta <= alpha) break;
             }
-            // tree[0] = minResult;
+            
             return [minResult, finalMove]
         }
     }
@@ -544,18 +541,8 @@ class MyPlayer extends Agent{
 
         this.turnTime = (isNaN(time))? 5000 :(timeSlope * time * validMoves.length / boardTotalMoves);
 
-        for(let move of validMoves){
-            // if(move[0] === 0 && move[1] === 8){
-            //     console.log(this.checkFillMove(board, move[0], move[1], move[2]));
-            // }
+        for(let move of validMoves){   
             if(!this.checkFillMove(board, move[0], move[1], move[2])){
-                // let newBoard = this.board.clone(board);
-                // this.board.move(newBoard, move[0], move[1], move[2], (this.numColor));
-                // let result = this.evaluate(newBoard);
-
-                // if(result < 0){
-                //     console.log(move);
-                // }
 
                 leftZeroMoves++;
             }
@@ -597,22 +584,10 @@ class MyPlayer extends Agent{
                 
             }
         }
-        //  this.minimaxTimer.clear();
-        // this.minimaxTimer.startTimer();
-        //  [score, move] = this.minimax(board, this.depth);
-        // this.minimaxTimer.endTimer();
-         console.log(score, move, this.color, this.turnTime);
- 
-         if(!move) return validMoves[Math.floor(Math.random() * validMoves.length)];
         
-        // console.log(this.trimmed_valid_moves(board))
+        console.log(score, move, this.color, this.turnTime);
 
-        // if(prompt([move, this.color])) this.recieve = false;
-        // console.log(move, this.color);
-
-        
-
-
+        if(!move) return validMoves[Math.floor(Math.random() * validMoves.length)];
         
         return move;
     }
