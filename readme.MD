@@ -1,0 +1,1 @@
+bot que juega cuadrito, para la clase de introduccion a sistemas inteligentes
