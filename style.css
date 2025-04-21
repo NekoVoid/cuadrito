@@ -1,0 +1,38 @@
+/* style basic normalize */
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    scroll-behavior: smooth;
+}
+img {
+    max-width: 100%;
+    display: block;
+}
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+}
+
+/* page style */
+
+.stack{
+    display: flex;
+    flex-direction: column;
+}
+
+.center_grid{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+
+#intro{
+    width: 100vw;
+    height: 100vh;
+
+}
