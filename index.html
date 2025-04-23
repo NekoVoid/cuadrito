@@ -1,53 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="./style.css" rel="stylesheet"/>
-	<script defer src="index.js"></script>
-	<title>Square Game</title>
+  <meta charset="UTF-8" />
+  <link href="style.css" rel="stylesheet"/> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
 </head>
+
 <body>
-	<div id="root">
-		<div id="intro" class="center_grid grid_gap_1">
-			<h1>Square Game</h1>
-			<form id="start_form" class="grid_gap_1">
-				<div class="player_input">
-					<label for="p1_name" class="stack">
-						Player 1
-						<input name="p1_name" id="p1_name" type="text"/>
-					</label>
-					<label for="p1_color" class="stack stack_center">
-						Color
-						<input name="p1_color" id="p1_color" type="color" value="#FF0000"/>
-					</label>
-					<label for="p1_bot" class="stack">
-						Bot
-						<input name="p1_bot" id="p1_bot" type="checkbox"/>
-					</label>
-				</div>
-				
-				<div class="player_input">
-					<label for="p2_name" class="stack">
-						Player 2
-						<input name="p2_name" id="p2_name" type="text"/>
-					</label>
-					<label for="p2_color" class="stack stack_center">
-						Color
-						<input name="p2_color" id="p2_color" type="color" value="#0000FF"/>
-					</label>
-					<label for="p2_bot" class="stack">
-						Bot
-						<input name="p2_bot" id="p2_bot" type="checkbox"/>
-					</label>
-				</div>
-		
-				<button type="submit">Start</button>
-			</form>
-		</div>
-		<div id="game_screen" style="display: none;">
-			<h1>Game Screen</h1>
-		</div>
-	</div>
+  <div id="root">
+    <div id="intro" class="center_grid grid_gap_1">
+      <h1>Square Game</h1>
+      <form id="start_form" class="grid_gap_1">
+        <div class="player_input">
+          <label for="p1_name" class="stack">
+            Player 1
+            <input name="p1_name" id="p1_name" type="text" />
+          </label>
+          <label for="p1_color" class="stack stack_center">
+            Color
+            <input name="p1_color" id="p1_color" type="color" value="#FF0000" />
+          </label>
+          <label for="p1_bot" class="stack">
+            Bot
+            <input name="p1_bot" id="p1_bot" type="checkbox" />
+          </label>
+        </div>
+
+        <div class="player_input">
+          <label for="p2_name" class="stack">
+            Player 2
+            <input name="p2_name" id="p2_name" type="text" />
+          </label>
+          <label for="p2_color" class="stack stack_center">
+            Color
+            <input name="p2_color" id="p2_color" type="color" value="#0000FF" />
+          </label>
+          <label for="p2_bot" class="stack">
+            Bot
+            <input name="p2_bot" id="p2_bot" type="checkbox" />
+          </label>
+        </div>
+
+        <button type="submit">Start</button>
+      </form>
+    </div>
+    <div id="game_screen" style="display: none;">
+      <h1>Game Screen</h1>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>
