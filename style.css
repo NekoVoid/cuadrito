@@ -1,28 +1,40 @@
 /* style basic normalize */
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: border-box;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #202020;
 }
+
 * {
     margin: 0;
     padding: 0;
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 img {
     max-width: 100%;
     display: block;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     text-wrap: balance;
 }
 
 /* page style */
 
-button, input[type=text]{
+button,
+input[type=text] {
     font-size: 1rem;
     background-color: white;
     border: solid gray 0.1rem;
@@ -30,21 +42,23 @@ button, input[type=text]{
     padding: 0.1rem 0.5rem;
 }
 
-button:hover{
+button:hover {
     background-color: lightgray;
 }
-button:active, input[type=text]:focus{
+
+button:active,
+input[type=text]:focus {
     border: solid #303030 0.15rem;
     color: initial;
     padding: 0.05rem 0.45rem
 }
 
-label{
+label {
     font-weight: 500;
     color: #303030;
 }
 
-input[type=color]{
+input[type=color] {
     width: 1.5rem;
     height: 1.5rem;
 
@@ -56,58 +70,63 @@ input[type=color]{
 
     cursor: pointer;
 }
-::-webkit-color-swatch-wrapper{
+
+::-webkit-color-swatch-wrapper {
     padding: 0;
 }
-::-webkit-color-swatch{
-    padding: 0;
-    border: none;
-}
-::-moz-color-swatch{
+
+::-webkit-color-swatch {
     padding: 0;
     border: none;
 }
 
-.stack{
+::-moz-color-swatch {
+    padding: 0;
+    border: none;
+}
+
+.stack {
     display: flex;
     flex-direction: column;
 }
 
-.stack_center{
+.stack_center {
     align-items: center;
 }
 
-.center_grid{
+.center_grid {
     display: grid;
     justify-content: center;
     align-content: center;
 }
 
-.bottom_flex{
+.bottom_flex {
     display: flex;
     align-items: flex-end;
 }
 
-.player_input{
+.player_input {
     display: grid;
     grid-auto-flow: column;
 
     align-items: center;
     gap: 1rem;
 }
-.player_input label{
+
+.player_input label {
     height: 100%;
 }
-.player_input label input{
-     margin: auto 0;
+
+.player_input label input {
+    margin: auto 0;
 }
 
-.grid_gap_1{
+.grid_gap_1 {
     display: grid;
     gap: 1rem;
 }
 
-#intro{
+#intro {
     width: 100vw;
     height: 100vh;
 
