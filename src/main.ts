@@ -26,3 +26,9 @@ form.addEventListener("submit", (ev) => {
     intro.style.display = "none";
     gameScreen.style.display = "";
 })
+
+import { listenResize } from "./resize";
+
+listenResize((current) => {
+
+})

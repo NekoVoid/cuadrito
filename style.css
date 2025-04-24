@@ -126,8 +126,50 @@ input[type=color] {
     gap: 1rem;
 }
 
-#intro {
+#intro, #game_screen{
     width: 100vw;
     height: 100vh;
+}
 
+#game_screen {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+
+    padding: 2vmin;
+}
+
+#game_canvas {
+    width: 95vh;
+    height: 95vh;
+    margin: auto;
+
+    background-color: gray;
+}
+
+
+
+@media (max-aspect-ratio: 4/3) {
+    #game_canvas {
+        width: 70vw;
+        height: 70vw;
+    }
+}
+@media (max-aspect-ratio: 7/6) {
+    #game_screen {
+        grid-auto-flow: row;
+    }
+}
+@media (max-aspect-ratio: 1/1) {
+    #game_canvas {
+        width: 70vh;
+        height: 70vh;
+    }
+}
+@media (max-aspect-ratio: 3/4) {
+    #game_canvas {
+        width: 95vw;
+        height: 95vw;
+    }
 }

@@ -10,7 +10,8 @@
 
 <body>
   <div id="root">
-    <div id="intro" class="center_grid grid_gap_1">
+    <div id="intro" class="center_grid grid_gap_1" style="display: none">
+    <!-- <div id="intro" class="center_grid grid_gap_1"> -->
       <h1>Square Game</h1>
       <form id="start_form" class="grid_gap_1">
         <div class="player_input">
@@ -46,11 +47,19 @@
         <button type="submit">Start</button>
       </form>
     </div>
-    <div id="game_screen" style="display: none;">
-      <h1>Game Screen</h1>
+    <div id="game_screen" class="grid_gap_1">
+      <div class="stack stack_center">
+        <p>
+          <span style="word-break: keep-all; white-space: ;">| <span style="color: red;">player 1</span> |</span>
+          <span style="word-break: keep-all; white-space: ;">| score: 12 |</span>
+          <span style="word-break: keep-all; white-space: ;">| time: 1:25.25 |</span>
+        </p>
+      </div>
+      <canvas id="game_canvas"></canvas>
     </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
+  <!-- <script type="module" src="/src/resize.ts"></script> -->
 </body>
 
 </html>
