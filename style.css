@@ -126,6 +126,21 @@ input[type=color] {
     gap: 1rem;
 }
 
+.p_board {
+    font-size: 3vmin;
+    word-break: break-all;
+}
+
+.p_board span{
+    font-weight: 600;
+
+    word-break: keep-all;
+    white-space: preserve nowrap;
+
+    font-variant-numeric: tabular-nums;
+    font-family: monospace;
+}
+
 #intro, #game_screen{
     width: 100vw;
     height: 100vh;
@@ -145,7 +160,8 @@ input[type=color] {
     height: 95vh;
     margin: auto;
 
-    background-color: gray;
+    border: solid 0.5rem gray;
+    border-radius: 0.5rem;
 }
 
 

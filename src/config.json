@@ -1,0 +1,11 @@
+{
+  "colors":{
+    "game":{
+      "border": "gray",
+      "background": "#303030",
+      "edge": "#FFFFFF",
+      "cell": "#505050",
+      "edgeMask": "7F"
+    }
+  }
+}
