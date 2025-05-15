@@ -1,6 +1,7 @@
 import { millisToMinutes } from "./utils";
 import { Player } from "./shared";
-import { createGame, drawBoard, drawEdge, drawGame } from "./game";
+import { createGame, drawBoard, drawEdge, drawGame, hoverEdgeIndex } from "./game";
+import { Vec2 } from "./Linear";
 
 interface PlayerBoard{
     nameSpan: HTMLSpanElement;
@@ -90,17 +91,19 @@ if(!ctx){
 };
 
 let gameSize = 5;
-let game = createGame(gameSize);
+let winRect = {
+        width: canvas.width,
+        height: canvas.height
+    };
+let game = createGame(gameSize, winRect);
 gameSize = game.board.length;
 
 let drawData = {
     players: players,
     size: gameSize,
     ctx: ctx,
-    winRect: {
-        width: canvas.width,
-        height: canvas.height
-    }
+    winRect: winRect,
+    prevHover: -1
 };
 
 game.edges[0].owner = -1;
@@ -111,14 +114,8 @@ function DrawLoop(time: DOMHighResTimeStamp){
         drawGame(game, drawData);
     }
 
-    // game.edges[0].owner = 0;
-    game.board[0][0] = 1;
-
-    drawEdge(game.edges[0], drawData, {type: "hover", player: 0});
-
     // requestAnimationFrame(DrawLoop);
 }
-
 
 form.addEventListener("submit", (ev) => {
     ev.preventDefault();
@@ -140,8 +137,31 @@ form.addEventListener("submit", (ev) => {
     gameScreen.style.display = "";
     
 })
+
+canvas.addEventListener("mousemove", (ev) => {
+    const mousePos: Vec2 = [ev.offsetX, ev.offsetY];
+    //TODO: MAKE UPDATING NOT NEED DRAWGAME TO PAINT CORRECTLY, OR NOT
+    //drawGame(game, drawData);
+
+    ctx.fillStyle = "red";
+    ctx.fillRect(mousePos[0]-3, mousePos[1]-3, 6, 6);
+
+    const edgeHover = hoverEdgeIndex(game.edgesClickBoxes, mousePos);
+    if(edgeHover >= 0){
+        if(edgeHover != drawData.prevHover){
+            if(drawData.prevHover >= 0)drawEdge(game.edges[drawData.prevHover], drawData);
+            drawEdge(game.edges[edgeHover], drawData, {type:"hover", player:0});
+        }
+    }else if(drawData.prevHover >= 0){
+        drawEdge(game.edges[drawData.prevHover], drawData);
+    }
+    
+    drawData.prevHover = edgeHover;
+});
+
 drawData.winRect.width = canvas.width;
 drawData.winRect.height = canvas.height;
 
-requestAnimationFrame(DrawLoop);
+if(drawData.ctx)
+    drawGame(game, drawData);
 
