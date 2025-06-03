@@ -103,20 +103,21 @@ let drawData = {
     size: gameSize,
     ctx: ctx,
     winRect: winRect,
-    prevHover: -1
+    overEdge: -1
 };
 
 game.edges[0].owner = -1;
 game.board[0][0] = 0;
 
-function DrawLoop(time: DOMHighResTimeStamp){
-    if(drawData.ctx){
-        drawGame(game, drawData);
-    }
+// function DrawLoop(time: DOMHighResTimeStamp){
+//     if(drawData.ctx){
+//         drawGame(game, drawData);
+//     }
 
-    // requestAnimationFrame(DrawLoop);
-}
+//     // requestAnimationFrame(DrawLoop);
+// }
 
+// form submit event, captures and sets both players
 form.addEventListener("submit", (ev) => {
     ev.preventDefault();
     const formData = new FormData(ev.currentTarget as (HTMLFormElement | undefined) );
@@ -140,7 +141,6 @@ form.addEventListener("submit", (ev) => {
 
 canvas.addEventListener("mousemove", (ev) => {
     const mousePos: Vec2 = [ev.offsetX, ev.offsetY];
-    //TODO: MAKE UPDATING NOT NEED DRAWGAME TO PAINT CORRECTLY, OR NOT
     //drawGame(game, drawData);
 
     ctx.fillStyle = "red";
@@ -148,16 +148,20 @@ canvas.addEventListener("mousemove", (ev) => {
 
     const edgeHover = hoverEdgeIndex(game.edgesClickBoxes, mousePos);
     if(edgeHover >= 0){
-        if(edgeHover != drawData.prevHover){
-            if(drawData.prevHover >= 0)drawEdge(game.edges[drawData.prevHover], drawData);
+        if(edgeHover != drawData.overEdge){
+            if(drawData.overEdge >= 0)drawEdge(game.edges[drawData.overEdge], drawData);
             drawEdge(game.edges[edgeHover], drawData, {type:"hover", player:0});
         }
-    }else if(drawData.prevHover >= 0){
-        drawEdge(game.edges[drawData.prevHover], drawData);
+    }else if(drawData.overEdge >= 0){
+        drawEdge(game.edges[drawData.overEdge], drawData);
     }
     
-    drawData.prevHover = edgeHover;
+    drawData.overEdge = edgeHover;
 });
+canvas.addEventListener("click", () => {
+    game.edges[drawData.overEdge].owner = (game.edges[drawData.overEdge].owner + 2) % 3 - 1;
+    drawEdge(game.edges[drawData.overEdge],drawData);
+})
 
 drawData.winRect.width = canvas.width;
 drawData.winRect.height = canvas.height;
@@ -165,3 +169,4 @@ drawData.winRect.height = canvas.height;
 if(drawData.ctx)
     drawGame(game, drawData);
 
+game.edges[0].owner = 0;

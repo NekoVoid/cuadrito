@@ -119,23 +119,44 @@ function createGame(size:number, winRect: {width:number, height:number}): Game{
   return { board, edges, edgesClickBoxes };
 }
 
+function drawEdgeLine(A: Vec2, B: Vec2, lStyle: string, lWidth: number, ctx: CanvasRenderingContext2D){
+  ctx.beginPath();
+    ctx.moveTo(A[0], A[1]);
+    ctx.lineTo(B[0], B[1]);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.strokeStyle = lStyle;
+    ctx.lineWidth = lWidth;
+    ctx.beginPath();
+    ctx.moveTo(A[0], A[1]);
+    ctx.lineTo(B[0], B[1]);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 function drawEdge(edge: Edge, drawData: DrawData, hover?: DrawEvent){
   const hovered = (hover && hover.type === "hover");
   const { players, size, ctx, winRect } = drawData;
   const cellSize = winRect.width / size;
 
   const lineSlim = winRect.width / 150;
-  const lineThick = winRect.width / 110;
+  const lineThick = winRect.width / 90;
+  const lineMid = winRect.width / 110;
 
   let lineStyle = colors.game.edge;
-  ctx.strokeStyle = colors.game.edge;
+  let lineWidth = lineThick;
+  ctx.strokeStyle = colors.game.background;
+  ctx.lineWidth = lineThick;
 
   if(edge.owner === -1){
     lineStyle = (hovered)? (players[hover.player].color + colors.game.edgeMask): colors.game.edge;
-    ctx.lineWidth = (hovered)? lineThick : lineSlim;
+    lineWidth = (hovered)? lineThick : lineSlim;
+    ctx.strokeStyle = hovered? colors.game.edge: colors.game.background;
+    ctx.lineWidth = lineThick + (hovered? 0: 2); 
   }else{
     lineStyle = players[edge.owner].color;
-    ctx.lineWidth = lineThick;
+    lineWidth = lineMid;
   }
 
   if(edge.cells[0][0] === edge.cells[1][0]){
@@ -143,35 +164,13 @@ function drawEdge(edge: Edge, drawData: DrawData, hover?: DrawEvent){
     const A = getCellPosition(edge.cells[1], cellSize);
     const B = addVec2(A, [0, cellSize - winRect.width/120]);
 
-    ctx.beginPath();
-    ctx.moveTo(A[0], A[1] + winRect.width/120);
-    ctx.lineTo(B[0], B[1]);
-    ctx.stroke();
-    ctx.closePath();
-
-    ctx.strokeStyle = lineStyle;
-    ctx.beginPath();
-    ctx.moveTo(A[0], A[1] + winRect.width/120);
-    ctx.lineTo(B[0], B[1]);
-    ctx.stroke();
-    ctx.closePath();
+    drawEdgeLine([A[0], A[1] + winRect.width/120], B, lineStyle, lineWidth, ctx);
   }else{
     //horizontal edge
     const A = getCellPosition(edge.cells[1], cellSize);
     const B = addVec2(A, [cellSize - winRect.width/120, 0]);
 
-    ctx.beginPath();
-    ctx.moveTo(A[0] + winRect.width/120, A[1]);
-    ctx.lineTo(B[0], B[1]);
-    ctx.stroke();
-    ctx.closePath();
-
-    ctx.strokeStyle = lineStyle;
-    ctx.beginPath();
-    ctx.moveTo(A[0] + winRect.width/120, A[1]);
-    ctx.lineTo(B[0], B[1]);
-    ctx.stroke();
-    ctx.closePath();
+    drawEdgeLine([A[0] + winRect.width/120, A[1]], B, lineStyle, lineWidth, ctx);
   }
 
 }
@@ -218,6 +217,10 @@ function hoverEdgeIndex(clickBoxes: EdgesClickBox[], mousePos: Vec2){
       return i;
   }
   return -1;
+}
+
+function EdgePlayed(EdgeIndex: number, game: Game, player: number){
+  return undefined;
 }
 
 export {
