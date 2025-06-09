@@ -102,6 +102,7 @@ function createGame(size:number, winRect: {width:number, height:number}): Game{
           cellSize, true
         )
       );
+
       // Horizontal Edges
       edges.push({
         cells: [[j,i],[j+1,i]],
@@ -200,10 +201,20 @@ function drawGame(game: Game, drawData: DrawData){
   drawData.ctx.fillRect(0, 0, drawData.winRect.width, drawData.winRect.height);
   drawData.ctx.lineCap = "round";
 
-  for(const edge of game.edges){
-    drawEdge(edge, drawData);
-  }
   drawBoard(game.board, drawData);
+
+  
+  for(let i = 0; i < game.edges.length; i++){
+    const edge = game.edges[i];
+    drawEdge(edge, drawData);
+
+    const sizeclickBox = game.edgesClickBoxes[i].botR[0] - game.edgesClickBoxes[i].topL[0];
+
+    const edgePoint = fromClickBoxSpace(addVec2(game.edgesClickBoxes[i].topL, [sizeclickBox/2, sizeclickBox/2]));
+    drawData.ctx.fillStyle = "black";
+    drawData.ctx.font = `bold ${drawData.winRect.width/35}px serif`;
+    drawData.ctx.fillText(i.toString(), edgePoint[0], edgePoint[1]);
+  }
 }
 
 function hoverEdgeIndex(clickBoxes: EdgesClickBox[], mousePos: Vec2){
@@ -220,7 +231,16 @@ function hoverEdgeIndex(clickBoxes: EdgesClickBox[], mousePos: Vec2){
 }
 
 function EdgePlayed(EdgeIndex: number, game: Game, player: number){
-  return undefined;
+  if(game.edges[EdgeIndex].owner !== -1) return; 
+
+  game.edges[EdgeIndex].owner = player;
+  const cells = game.edges[EdgeIndex].cells;
+  for(const cell of cells){
+    game.board[cell[0]][cell[1]] += 1;
+    if(game.board[cell[0]][cell[1]] >= 4){
+      fillBoardCell(game, cell, player);
+    }
+  }
 }
 
 export {
@@ -230,4 +250,8 @@ export {
   drawGame,
   getCellPosition,
   hoverEdgeIndex
+}
+
+function fillBoardCell(game: Game, cell: number[], player: number) {
+  
 }

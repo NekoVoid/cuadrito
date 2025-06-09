@@ -141,10 +141,10 @@ form.addEventListener("submit", (ev) => {
 
 canvas.addEventListener("mousemove", (ev) => {
     const mousePos: Vec2 = [ev.offsetX, ev.offsetY];
-    //drawGame(game, drawData);
+    drawGame(game, drawData);
 
-    ctx.fillStyle = "red";
-    ctx.fillRect(mousePos[0]-3, mousePos[1]-3, 6, 6);
+    // ctx.fillStyle = "red";
+    // ctx.fillRect(mousePos[0]-3, mousePos[1]-3, 6, 6);
 
     const edgeHover = hoverEdgeIndex(game.edgesClickBoxes, mousePos);
     if(edgeHover >= 0){
@@ -169,4 +169,3 @@ drawData.winRect.height = canvas.height;
 if(drawData.ctx)
     drawGame(game, drawData);
 
-game.edges[0].owner = 0;
