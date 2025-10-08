@@ -4,11 +4,6 @@ const { colors } = config;
 import { addVec2, Vec2 } from "./Linear";
 import { Player } from "./shared";
 
-interface Edge{
-  cells: [Vec2, Vec2];
-  owner: number;
-}
-
 interface EdgesClickBox{
   topL: Vec2;
   botR: Vec2;
