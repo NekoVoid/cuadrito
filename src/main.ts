@@ -1,6 +1,6 @@
 import { millisToMinutes } from "./utils";
 import { Player } from "./shared";
-import { createGame, drawBoard, drawEdge, drawGame, hoverEdgeIndex } from "./game";
+import { createGame, drawBoard, drawEdge, drawGame, EdgePlayed, hoverEdgeIndex } from "./game";
 import { Vec2 } from "./Linear";
 
 interface PlayerBoard{
@@ -90,7 +90,7 @@ if(!ctx){
     throw new Error("Canvas context not found")
 };
 
-let gameSize = 5;
+let gameSize = 15;
 let winRect = {
         width: canvas.width,
         height: canvas.height
@@ -106,16 +106,7 @@ let drawData = {
     overEdge: -1
 };
 
-game.edges[0].owner = -1;
-game.board[0][0] = 0;
-
-// function DrawLoop(time: DOMHighResTimeStamp){
-//     if(drawData.ctx){
-//         drawGame(game, drawData);
-//     }
-
-//     // requestAnimationFrame(DrawLoop);
-// }
+let currentPLayer = 0;
 
 // form submit event, captures and sets both players
 form.addEventListener("submit", (ev) => {
@@ -141,7 +132,7 @@ form.addEventListener("submit", (ev) => {
 
 canvas.addEventListener("mousemove", (ev) => {
     const mousePos: Vec2 = [ev.offsetX, ev.offsetY];
-    drawGame(game, drawData);
+    // drawGame(game, drawData);
 
     // ctx.fillStyle = "red";
     // ctx.fillRect(mousePos[0]-3, mousePos[1]-3, 6, 6);
@@ -149,18 +140,20 @@ canvas.addEventListener("mousemove", (ev) => {
     const edgeHover = hoverEdgeIndex(game.edgesClickBoxes, mousePos);
     if(edgeHover >= 0){
         if(edgeHover != drawData.overEdge){
-            if(drawData.overEdge >= 0)drawEdge(game.edges[drawData.overEdge], drawData);
-            drawEdge(game.edges[edgeHover], drawData, {type:"hover", player:0});
+            if(drawData.overEdge >= 0)drawEdge(game, drawData.overEdge, drawData);
+            drawEdge(game, edgeHover, drawData, {type:"hover", player:currentPLayer});
         }
     }else if(drawData.overEdge >= 0){
-        drawEdge(game.edges[drawData.overEdge], drawData);
+        drawEdge(game, drawData.overEdge, drawData);
     }
     
     drawData.overEdge = edgeHover;
 });
 canvas.addEventListener("click", () => {
-    game.edges[drawData.overEdge].owner = (game.edges[drawData.overEdge].owner + 2) % 3 - 1;
-    drawEdge(game.edges[drawData.overEdge],drawData);
+    EdgePlayed(drawData.overEdge, game, currentPLayer);
+    drawGame(game, drawData);
+
+    currentPLayer = currentPLayer? 0: 1;
 })
 
 drawData.winRect.width = canvas.width;
