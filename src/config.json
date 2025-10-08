@@ -2,9 +2,9 @@
   "colors":{
     "game":{
       "border": "gray",
-      "background": "#303030",
+      "background": "#B0B0B0",
       "edge": "#FFFFFF",
-      "cell": "#505050",
+      "cell": "gray",
       "edgeMask": "7F"
     }
   }
